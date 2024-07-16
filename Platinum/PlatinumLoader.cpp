@@ -89,11 +89,6 @@ std::vector<std::vector<int>> PlatinumLoader::GetMapData(const int& layerNum)
 		}
 	}
 
-
-
-
-
-
 	// マップデータを返す
 	return mapData;
 }
@@ -102,6 +97,8 @@ std::vector<std::vector<int>> PlatinumLoader::GetMapData(const int& layerNum)
 
 void PlatinumLoader::FileExistsConfirmation(const TCHAR* filePath)
 {
+#if DEBUG_
+
 	if (!std::filesystem::is_regular_file(filePath))
 	{
 
@@ -121,10 +118,13 @@ void PlatinumLoader::FileExistsConfirmation(const TCHAR* filePath)
 
 		_wassert(_wtext, _CRT_WIDE(__FILE__), (unsigned)(__LINE__));
 	}
+#endif
 }
 
 void PlatinumLoader::LayerCheck(const int& layerNum)
 {
+#if DEBUG_
+
 	// レイヤーが存在しない場合エラーメッセージを出す
 	if (m_layerMaxNum == layerNum)
 	{
@@ -141,4 +141,5 @@ void PlatinumLoader::LayerCheck(const int& layerNum)
 
 		_wassert(_wtext, _CRT_WIDE(__FILE__), (unsigned)(__LINE__));
 	}
+#endif
 }
