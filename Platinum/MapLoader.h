@@ -2,26 +2,13 @@
 #include <DxLib.h>
 #include <vector>
 #include <memory>
-
+#include "PlatinumLoader.h"
 
 class PlatinumLoader;
 
 class MapLoader
 {
-public:
 
-	struct MapData
-	{
-		// チップ番号の保存
-		std::vector<std::vector<int>> m_currentData;
-
-		// 列
-		int dataColNum = 0;
-		// 行
-		int dataRowNum = 0;
-		// マップチップサイズ
-		int mapChipSize = 0;
-	};
 
 public:
 	MapLoader();
@@ -31,19 +18,20 @@ public:
 
 	void Draw();
 
-	void Load(const TCHAR* fmfFilePath, int layerType);
+	void Load(const TCHAR* fmfFilePath);
 
 private:
 
-	// チップ番号の保存
-	std::vector<std::vector<int>> m_currentData;
+	// マップデータ
+	std::vector<PlatinumLoader::MapData> m_mapData;
+	
+	// マップレイヤー
+	int m_mapLayer;
 
 	// 列番号
 	int m_width;
 	// 行番号
 	int m_height;
-
-
 	// マップチップサイズ
 	int m_mapChipSize;
 

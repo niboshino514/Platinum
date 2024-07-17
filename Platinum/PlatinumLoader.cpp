@@ -70,7 +70,7 @@ void PlatinumLoader::Load(const TCHAR* filePath)
 
 
 
-std::vector<std::vector<int>> PlatinumLoader::GetMapData(const int& layerNum)
+std::vector<std::vector<int>> PlatinumLoader::GetMapLayerData(const int& layerNum)
 {
 	// レイヤーが存在するかを確認する
 	LayerCheck(layerNum);
@@ -93,7 +93,20 @@ std::vector<std::vector<int>> PlatinumLoader::GetMapData(const int& layerNum)
 	return mapData;
 }
 
+std::vector<PlatinumLoader::MapData> PlatinumLoader::GetMapAllData()
+{
+	// マップデータ格納変数
+	std::vector<MapData> mapData;
 
+	// すべてのレイヤーのデータを格納する
+	for (int i = 0; i < m_layerMaxNum; i++)
+	{
+		mapData.push_back(MapData(GetMapLayerData(i)));
+	}
+
+	// マップデータを返す
+	return mapData;
+}
 
 void PlatinumLoader::FileExistsConfirmation(const TCHAR* filePath)
 {

@@ -1,5 +1,4 @@
 #include "MapLoader.h"
-#include "PlatinumLoader.h"
 #include <vector>
 #include "Vec2.h"
 
@@ -14,13 +13,13 @@ namespace
 
 
 MapLoader::MapLoader():
+	m_mapData(),
+	m_mapLayer(0),
 	m_width(0),
 	m_height(0),
 	m_mapChipSize(0),
 	loader(std::make_shared<PlatinumLoader>())
 {
-	// 可変長配列の初期化
-	m_currentData.clear();
 }
 
 MapLoader::~MapLoader()
@@ -29,8 +28,11 @@ MapLoader::~MapLoader()
 
 void MapLoader::Init()
 {
+	// ロード
+	Load(kFieldDataFileName[0]);
 
-	Load(kFieldDataFileName[0], 0);
+	// 表示するマップレイヤー
+	m_mapLayer = 1;
 }
 
 void MapLoader::Draw()
@@ -45,7 +47,7 @@ void MapLoader::Draw()
 		for (int x = 0; x < m_width; x++)
 		{
 			// チップ番号の代入
-			int chipNum = m_currentData[x][y];
+			int chipNum = m_mapData[m_mapLayer].mapData[x][y];
 
 			// 座標の代入
 			pos1 = Vec2(x * m_mapChipSize , y * m_mapChipSize);
@@ -74,14 +76,13 @@ void MapLoader::Draw()
 }
 
 
-void MapLoader::Load(const TCHAR* fmfFilePath, int layerType)
+void MapLoader::Load(const TCHAR* fmfFilePath)
 {
 	// ファイルをロードし、中身をみる
 	loader->Load(fmfFilePath);
 
-	// マップ
-	m_currentData = loader->GetMapData(layerType);
-
+	// マップのすべてのデータを取得
+	m_mapData = loader->GetMapAllData();
 
 	// チップサイズの取得
 	PlatinumLoader::MapInfo mapInfo = loader->GetMapInfo();

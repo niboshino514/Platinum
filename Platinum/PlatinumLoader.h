@@ -24,6 +24,12 @@ public:
 		int chipSize = 0;
 	};
 
+	// マップデータ
+	struct MapData
+	{
+		// マップデータ
+		std::vector<std::vector<int>> mapData;
+	};
 
 public:
 	PlatinumLoader();
@@ -39,12 +45,17 @@ public:
 	
 
 	/// <summary>
-	/// マップデータを取得する
+	/// レイヤーごとのマップデータを取得する
 	/// </summary>
 	/// <param name="layerNum">レイヤー番号</param>
 	/// <returns>マップデータを返す</returns>
-	std::vector<std::vector<int>> GetMapData(const int& layerNum);
+	std::vector<std::vector<int>> GetMapLayerData(const int& layerNum);
 
+	/// <summary>
+	/// すべてのマップデータを取得する
+	/// </summary>
+	/// <returns></returns>
+	std::vector<MapData> GetMapAllData();
 
 	/// <summary>
 	/// マップ情報を返す
